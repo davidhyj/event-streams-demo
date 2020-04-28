@@ -1,0 +1,9 @@
+{
+    "type" : "record",
+    "namespace" : "eventstreams",
+    "name" : "testRecord",
+    "fields" : [
+       { "name" : "testString" , "type" : "string" },
+       { "name" : "testInt" , "type" : "int" }
+    ]
+ }

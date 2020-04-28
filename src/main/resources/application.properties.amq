@@ -1,0 +1,29 @@
+# General configs that should be changed
+spring.kafka.bootstrap-servers=amq-kafka-cluster-kafka-bootstrap-amq-kafka-proj.cpat-dev-cp4i-us-intern-afb9c6047b062b44e3f1b3ecfeba4309-0001.sjc03.containers.appdomain.cloud:443
+spring.kafka.ssl.truststore-location=file:app/truststore.jks
+spring.kafka.ssl.truststore-password=password
+
+# Consumer configs that should be changed
+listener.topic=amq-topic01
+spring.kafka.consumer.group-id=event-streams-kafka-group-id
+
+# Producer configs that should be changed
+spring.kafka.template.default-topic=amq-topic01
+spring.kafka.producer.client-id=event-streams-kafka-client-id
+
+#####
+
+# General
+spring.kafka.jaas.enabled=true
+spring.kafka.properties.security.protocol=SSL
+spring.kafka.listener.missing-topics-fatal=false
+
+# Producer
+spring.kafka.producer.key-serializer=org.apache.kafka.common.serialization.StringSerializer
+spring.kafka.producer.value-serializer=org.apache.kafka.common.serialization.StringSerializer
+
+# Consumer
+spring.kafka.consumer.auto-offset-reset=earliest
+spring.kafka.consumer.key-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.value-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.ssl.endpoint.identification.algorithm=HTTPS
