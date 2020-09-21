@@ -21,8 +21,8 @@ public class EventStreamsDemoController {
 
     @KafkaListener(topics = "${listener.topic}")
     public void listen(ConsumerRecord<String, String> cr) throws Exception {
-        if (cr.key().equals("billing")) {
-            sendMsg("records", "4");
+        if (cr.key().equals("records")) {
+            sendMsg("replay", "5");
             messages.add(cr.value());
         }
         else {
