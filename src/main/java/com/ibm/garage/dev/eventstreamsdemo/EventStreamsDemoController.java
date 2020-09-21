@@ -1,6 +1,7 @@
 package com.ibm.garage.dev.eventstreamsdemo;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -22,12 +23,11 @@ public class EventStreamsDemoController {
     @KafkaListener(topics = "${listener.topic}")
     public void listen(ConsumerRecord<String, String> cr) throws Exception {
         if (cr.key().equals("records")) {
-            sendMsg("replay", "5");
+            sendMsg("replay", cr.value());
             messages.add(cr.value());
         }
         else {
-            System.out.println(cr.key());
-            System.out.println("Skipping");
+            System.out.println("Skipping" + cr.key());
         }
     }
 
@@ -38,6 +38,12 @@ public class EventStreamsDemoController {
     @GetMapping(value = "send/{key}/{msg}")
     public void send(@PathVariable String key, @PathVariable String msg) throws Exception {
         template.sendDefault(key, msg);
+    }
+
+    @GetMapping(value = "send/{key}")
+    public void send(@PathVariable String key) throws Exception {
+        UUID uuid = UUID.randomUUID();
+        template.sendDefault(key, uuid.toString());
     }
 
     @GetMapping("received")
