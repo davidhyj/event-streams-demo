@@ -21,12 +21,23 @@ public class EventStreamsDemoController {
 
     @KafkaListener(topics = "${listener.topic}")
     public void listen(ConsumerRecord<String, String> cr) throws Exception {
-        messages.add(cr.value());
+        if (cr.key().equals("patientInfo")) {
+            sendMsg("apptSched", "1");
+            messages.add(cr.value());
+        }
+        else {
+            System.out.println(cr.key());
+            System.out.println("Skipping");
+        }
     }
 
-    @GetMapping(value = "send/{msg}")
-    public void send(@PathVariable String msg) throws Exception {
-        template.sendDefault(msg);
+    public void sendMsg(String key, String msg) throws Exception {
+        template.sendDefault(key, msg);
+    }
+
+    @GetMapping(value = "send/{key}/{msg}")
+    public void send(@PathVariable String key, @PathVariable String msg) throws Exception {
+        template.sendDefault(key, msg);
     }
 
     @GetMapping("received")
